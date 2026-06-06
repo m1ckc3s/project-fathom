@@ -26,15 +26,43 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: calc(env(safe-area-inset-top) + 2rem) 1rem
+    calc(env(safe-area-inset-bottom) + 2rem);
+}
+
+/* Grows to fill everything between the title and the footer, keeping the
+   button centered in that gap. */
+.center {
+  flex: 1;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 1rem;
-  padding: env(safe-area-inset-top) 1rem env(safe-area-inset-bottom);
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.92);
+  max-width: 18rem;
+}
+
+.button-wrap {
+  position: relative;
+  display: inline-flex;
 }
 
 .fancy {
-  appearance: none;
+  display: inline-block;
   border: none;
-  cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
   color: #000;
@@ -43,10 +71,62 @@ body {
   border-radius: 999px;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  /* Decoration only — the real touch target is the switch layered on top. */
+  pointer-events: none;
 }
 
-.fancy:active {
+.button-wrap:active .fancy {
   opacity: 0.85;
+}
+
+.fancy.wobble {
+  animation: wobble 0.4s ease;
+}
+
+@keyframes wobble {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-4px);
+  }
+  40% {
+    transform: translateX(4px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* A genuine native iOS switch, kept at native appearance (stripping it would
+   kill the haptic), scaled up via transform so its tappable area covers the
+   pill, and hidden at opacity 0 so it reads as the button. The finger lands
+   directly on the control — the one route that still fires haptics on 26.5. */
+.haptic-switch {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  transform: translate(-50%, -50%) scale(6);
+  transform-origin: center;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.note {
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.3);
 }
 
 .marker {
