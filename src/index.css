@@ -96,9 +96,7 @@ body {
   }
 }
 
-/* Clip layer matching the pill exactly. The switch is scaled up to guarantee
-   full coverage, but overflow:hidden trims its tappable area to the button's
-   bounds — so taps just outside the pill no longer register. */
+/* overflow:hidden trims the scaled-up switch's tap area to the pill bounds. */
 .haptic-clip {
   position: absolute;
   inset: 0;
@@ -106,10 +104,8 @@ body {
   border-radius: 999px;
 }
 
-/* A genuine native iOS switch, kept at native appearance (stripping it would
-   kill the haptic), scaled up via transform so it fully covers the clip, and
-   hidden at opacity 0 so it reads as the button. The finger lands directly on
-   the control — the one route that still fires haptics on 26.5. */
+/* Native appearance is load-bearing: stripping it kills the haptic. opacity:0
+   (not display:none) keeps it rendered and tappable; scale(6) covers the clip. */
 .haptic-switch {
   position: absolute;
   left: 50%;
@@ -131,8 +127,6 @@ body {
   color: rgba(255, 255, 255, 0.3);
 }
 
-/* Social buttons — same look as the ripple project, pinned to the very bottom
-   here (ripple anchors them top-right). */
 .social-links {
   position: fixed;
   bottom: calc(env(safe-area-inset-bottom) + 18px);
