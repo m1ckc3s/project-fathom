@@ -23,3 +23,6 @@ npm-debug.log*
 
 # vercel
 .vercel
+
+# local assistant notes (keep out of the repo)
+CLAUDE.md

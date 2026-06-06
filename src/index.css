@@ -131,6 +131,49 @@ body {
   color: rgba(255, 255, 255, 0.3);
 }
 
+/* Social buttons — same look as the ripple project, pinned to the very bottom
+   here (ripple anchors them top-right). */
+.social-links {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom) + 18px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #d4d4d8;
+  background: rgba(20, 20, 22, 0.6);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 24px 48px -16px rgba(0, 0, 0, 0.6);
+  transition:
+    color 140ms,
+    border-color 140ms,
+    background 140ms,
+    transform 140ms;
+}
+.social-btn:hover {
+  color: #fafafa;
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
+}
+.social-btn:active {
+  transform: translateY(0);
+}
+
 .marker {
   font-size: 0.65rem;
   letter-spacing: 0.08em;
