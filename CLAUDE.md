@@ -19,6 +19,45 @@ after a refresh, the new build is live.
 
 **Always increment `BUILD` when pushing a change meant to be tested on-device.**
 
+### When to bump the build (do this automatically)
+
+Bump the marker on ANY action that produces a new deployment the owner can
+refresh on their phone — judge by intent, don't wait for an exact phrase.
+This includes (non-exhaustive):
+
+- "push a build", "push this to test", "ship it"
+- "commit this to main" / "let's commit this to main"
+- "open a PR" / "let's PR this" / "raise a PR for this"
+- merging a PR into `main`
+
+**Rule of thumb:** if your next action creates a commit that will land on
+`main` (directly, or via a PR that gets merged), bump first.
+
+Every time, do all three:
+
+1. Increment the `BUILD` constant in `src/App.tsx` by exactly one.
+2. Stage + commit (Conventional Commits) — fold the bump into the same commit
+   as the change being tested whenever possible.
+3. Push (to `main`, or to the PR branch if working through a PR).
+
+Why: the `Test N` marker must change with every deploy, so a phone refresh
+showing the next number proves the new build is live. Never push a test build
+without bumping `BUILD` first.
+
+### Vercel deploy targets — important
+
+- Pushes/merges to `main` → the **production** URL (what you test on your phone).
+- PR branches → a separate **per-PR preview** URL, *not* the production URL.
+  The bump still applies; just know it's a different link than production.
+
+### Caveat
+
+These are instructions to the assistant, followed best-effort — **not** an
+automated hook. They only take effect when the assistant makes the commit in a
+session that has loaded this file. For a hard, mechanical guarantee (bump on
+every commit no matter who/what triggers it), add a git pre-commit or Claude
+Code hook instead — ask the owner if that's wanted.
+
 ## Deploy flow
 
 - `main` is connected to Vercel. Every push to `main` triggers a new deploy.
