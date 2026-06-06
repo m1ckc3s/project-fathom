@@ -26,17 +26,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: calc(env(safe-area-inset-top) + 2rem) 1rem
-    calc(env(safe-area-inset-bottom) + 2rem);
-}
-
-/* Grows to fill everything between the title and the footer, keeping the
-   button centered in that gap. */
-.center {
-  flex: 1;
-  display: flex;
-  align-items: center;
   justify-content: center;
+  gap: 1.5rem;
+  padding: env(safe-area-inset-top) 1rem env(safe-area-inset-bottom);
 }
 
 .footer {
@@ -104,10 +96,20 @@ body {
   }
 }
 
+/* Clip layer matching the pill exactly. The switch is scaled up to guarantee
+   full coverage, but overflow:hidden trims its tappable area to the button's
+   bounds — so taps just outside the pill no longer register. */
+.haptic-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 999px;
+}
+
 /* A genuine native iOS switch, kept at native appearance (stripping it would
-   kill the haptic), scaled up via transform so its tappable area covers the
-   pill, and hidden at opacity 0 so it reads as the button. The finger lands
-   directly on the control — the one route that still fires haptics on 26.5. */
+   kill the haptic), scaled up via transform so it fully covers the clip, and
+   hidden at opacity 0 so it reads as the button. The finger lands directly on
+   the control — the one route that still fires haptics on 26.5. */
 .haptic-switch {
   position: absolute;
   left: 50%;
