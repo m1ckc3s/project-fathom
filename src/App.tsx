@@ -3,7 +3,7 @@ import { useState } from "react"
 // On every new deploy, bump the minor by one (3.0 → 3.1 → 3.2 …).
 // On the phone it renders as "version X.Y" under the button, so a refresh
 // that shows the new number confirms Vercel served the latest build.
-const VERSION = "3.0"
+const VERSION = "3.1"
 
 export default function App() {
   const [wobble, setWobble] = useState(0)
@@ -23,14 +23,19 @@ export default function App() {
         {/* Real native iOS switch, layered invisibly over the pill and clipped
             to its bounds so the tap target matches the button exactly. A direct
             finger tap toggles it and fires the Taptic Engine; bumping the wobble
-            counter restarts the shake on every tap. */}
+            counter restarts the shake on every tap. navigator.vibrate is absent
+            on iOS/WebKit, so the fallback is a no-op there and only buzzes on
+            Android (Blink/Gecko), where the native switch produces no haptic. */}
         <span className="haptic-clip">
           <input
             className="haptic-switch"
             type="checkbox"
             aria-label="Play Haptic"
             ref={(el) => el?.setAttribute("switch", "")}
-            onChange={() => setWobble((n) => n + 1)}
+            onChange={() => {
+              setWobble((n) => n + 1)
+              navigator.vibrate?.(10)
+            }}
           />
         </span>
       </div>
