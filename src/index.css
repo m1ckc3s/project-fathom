@@ -96,25 +96,20 @@ body {
   }
 }
 
-/* overflow:hidden trims the scaled-up switch's tap area to the pill bounds. */
-.haptic-clip {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  border-radius: 999px;
-}
-
 /* Native appearance is load-bearing: stripping it kills the haptic. opacity:0
-   (not display:none) keeps it rendered and tappable; scale(6) covers the clip. */
+   (not display:none) keeps it rendered and tappable. width/height fill the
+   button; clip-path rounds the *hit* area to the pill — overflow/border-radius
+   would only clip paint, leaving the corners outside the capsule tappable. */
 .haptic-switch {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   margin: 0;
   opacity: 0;
   cursor: pointer;
-  transform: translate(-50%, -50%) scale(6);
-  transform-origin: center;
+  clip-path: inset(0 round 999px);
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }

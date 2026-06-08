@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 // Bump the minor every deploy — the rendered marker proves the live build. See CLAUDE.md.
-const VERSION = "3.0"
+const VERSION = "3.1"
 
 export default function App() {
   const [wobble, setWobble] = useState(0)
@@ -18,16 +18,14 @@ export default function App() {
         >
           Play Haptic
         </span>
-        <span className="haptic-clip">
-          {/* `switch` isn't a recognized JSX/TS attribute, so set it imperatively. */}
-          <input
-            className="haptic-switch"
-            type="checkbox"
-            aria-label="Play Haptic"
-            ref={(el) => el?.setAttribute("switch", "")}
-            onChange={() => setWobble((n) => n + 1)}
-          />
-        </span>
+        {/* `switch` isn't a recognized JSX/TS attribute, so set it imperatively. */}
+        <input
+          className="haptic-switch"
+          type="checkbox"
+          aria-label="Play Haptic"
+          ref={(el) => el?.setAttribute("switch", "")}
+          onChange={() => setWobble((n) => n + 1)}
+        />
       </div>
 
       <div className="footer">
